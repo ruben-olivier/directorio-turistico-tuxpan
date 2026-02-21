@@ -1,0 +1,297 @@
+/* ============================================
+   RESPONSIVE - Mobile First
+   Layout Explorar con tabs movil
+   ============================================ */
+
+/* --- Movil (base, hasta 767px) --- */
+
+/* Navbar movil */
+.navbar-toggle {
+    display: block;
+}
+
+.navbar-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--color-white);
+    flex-direction: column;
+    padding: 16px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    gap: 0;
+}
+
+.navbar-menu.activo {
+    display: flex;
+}
+
+.navbar-menu li a {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+.navbar-menu li:last-child a {
+    border-bottom: none;
+}
+
+/* Hero movil */
+#hero {
+    min-height: 45vh;
+}
+
+.hero-title {
+    font-size: 2rem;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem;
+}
+
+.hero-categorias {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.hero-categorias::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-chip {
+    font-size: 0.72rem;
+    padding: 6px 12px;
+}
+
+/* Tabs movil visibles */
+.explorar-tabs {
+    display: flex;
+    position: sticky;
+    top: var(--header-height);
+    z-index: 100;
+}
+
+/* Layout movil: 1 columna, tabs controlan visibilidad */
+.explorar-layout {
+    display: block;
+    height: auto;
+}
+
+.explorar-sidebar {
+    display: block;
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
+}
+
+.explorar-mapa {
+    display: none;
+    position: relative;
+    height: 60vh;
+    top: auto;
+}
+
+/* Cuando tab mapa esta activo */
+.explorar-layout.tab-mapa .explorar-sidebar {
+    display: none;
+}
+
+.explorar-layout.tab-mapa .explorar-mapa {
+    display: block;
+    height: calc(100vh - var(--header-height) - 48px);
+}
+
+/* Filtros movil */
+.filtros-fila {
+    flex-wrap: wrap;
+}
+
+.filtro-select {
+    flex: 1 1 45%;
+    min-width: 0;
+    font-size: 0.78rem;
+    padding: 7px 8px;
+}
+
+/* Tarjetas movil: layout vertical */
+.lugares-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+}
+
+.lugar-card {
+    grid-template-columns: 110px 1fr;
+}
+
+.lugar-card-img {
+    min-height: 120px;
+}
+
+.lugar-card-body h3 {
+    font-size: 0.88rem;
+}
+
+.lugar-card-body .card-descripcion {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 2;
+}
+
+/* Modal movil */
+.modal {
+    padding: 20px 10px;
+}
+
+.modal-contenido {
+    margin: 10px 0;
+}
+
+.modal-detalles {
+    grid-template-columns: 1fr;
+}
+
+.modal-galeria,
+.modal-galeria .swiper-slide img {
+    height: 220px;
+}
+
+/* Footer movil */
+.footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* --- Tablet (768px en adelante) --- */
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-categorias {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-x: visible;
+    }
+
+    /* Tabs aun visibles en tablet */
+    .explorar-tabs {
+        display: flex;
+    }
+
+    .filtro-select {
+        flex: 1;
+        min-width: 0;
+        font-size: 0.82rem;
+    }
+
+    .filtros-fila {
+        flex-wrap: nowrap;
+    }
+
+    .lugar-card {
+        grid-template-columns: 150px 1fr;
+    }
+
+    .lugar-card-img {
+        min-height: 140px;
+    }
+
+    .modal-galeria,
+    .modal-galeria .swiper-slide img {
+        height: 350px;
+    }
+
+    .modal-detalles {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+}
+
+/* --- Desktop (1024px en adelante) --- */
+@media (min-width: 1024px) {
+    /* Navbar desktop */
+    .navbar-toggle {
+        display: none;
+    }
+
+    .navbar-menu {
+        display: flex;
+        position: static;
+        width: auto;
+        background: transparent;
+        flex-direction: row;
+        padding: 0;
+        box-shadow: none;
+        gap: 24px;
+    }
+
+    .navbar-menu li a {
+        border-bottom: none;
+        padding: 8px 4px;
+    }
+
+    /* Hero desktop */
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    /* Tabs ocultos en desktop (ambas columnas son visibles) */
+    .explorar-tabs {
+        display: none;
+    }
+
+    /* Layout de 2 columnas */
+    .explorar-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: calc(100vh - var(--header-height));
+    }
+
+    .explorar-sidebar {
+        overflow-y: auto;
+        height: calc(100vh - var(--header-height));
+    }
+
+    .explorar-mapa {
+        display: block;
+        position: sticky;
+        top: var(--header-height);
+        height: calc(100vh - var(--header-height));
+    }
+
+    /* Forzar ambos visibles en desktop (anular estado de tabs) */
+    .explorar-layout.tab-mapa .explorar-sidebar {
+        display: block;
+    }
+
+    .explorar-layout.tab-mapa .explorar-mapa {
+        display: block;
+        height: calc(100vh - var(--header-height));
+    }
+
+    /* Modal desktop */
+    .modal-galeria,
+    .modal-galeria .swiper-slide img {
+        height: 400px;
+    }
+}
+
+/* --- Desktop grande (1440px en adelante) --- */
+@media (min-width: 1440px) {
+    .explorar-layout {
+        grid-template-columns: 45% 55%;
+    }
+
+    .lugares-grid {
+        gap: 16px;
+        padding: 16px;
+    }
+}

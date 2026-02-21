@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio Turistico de Tuxpan, Veracruz</title>
+    <meta name="description" content="Descubre los mejores lugares de Tuxpan, Veracruz: playas, restaurantes, hoteles, sitios historicos y mas.">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- ============ HEADER / NAVBAR ============ -->
+    <header id="header">
+        <nav class="navbar">
+            <a href="#hero" class="navbar-logo">
+                <span class="logo-icon">🌊</span>
+                <span class="logo-text">Tuxpan <span class="logo-accent">Turistico</span></span>
+            </a>
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="Abrir menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#explorar">Explorar</a></li>
+                <li><a href="#footer">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============ HERO BANNER ============ -->
+    <section id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Descubre <span class="hero-accent">Tuxpan</span></h1>
+            <p class="hero-subtitle">Playas, cultura, gastronomia y aventura en la costa veracruzana</p>
+
+            <!-- Barra de busqueda principal -->
+            <div class="hero-search">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Buscar playas, restaurantes, hoteles..."
+                        autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Categorias como chips horizontales -->
+            <div class="hero-categorias" id="hero-categorias">
+                <!-- Se generan dinamicamente desde app.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SECCION EXPLORAR (Layout 2 columnas) ============ -->
+    <section id="explorar">
+
+        <!-- Tabs para movil: Lista | Mapa -->
+        <div class="explorar-tabs" id="explorar-tabs">
+            <button class="tab-btn activo" data-tab="lista">📋 Lista</button>
+            <button class="tab-btn" data-tab="mapa">🗺️ Mapa</button>
+        </div>
+
+        <div class="explorar-layout">
+
+            <!-- COLUMNA IZQUIERDA: Filtros + Tarjetas -->
+            <div class="explorar-sidebar" id="explorar-sidebar">
+
+                <!-- Filtros compactos -->
+                <div class="filtros-compactos">
+                    <div class="filtros-fila">
+                        <select id="filtro-categoria" class="filtro-select">
+                            <option value="">Categoria</option>
+                            <option value="playas">🏖️ Playas</option>
+                            <option value="restaurantes">🍽️ Restaurantes</option>
+                            <option value="hoteles">🏨 Hoteles</option>
+                            <option value="historicos">🏛️ Historicos</option>
+                            <option value="actividades">🎯 Actividades</option>
+                            <option value="vida-nocturna">🌙 Vida Nocturna</option>
+                            <option value="transporte">🚌 Transporte</option>
+                            <option value="servicios">📋 Servicios</option>
+                        </select>
+                        <select id="filtro-zona" class="filtro-select">
+                            <option value="">Zona</option>
+                            <option value="norte">Norte</option>
+                            <option value="sur">Sur</option>
+                            <option value="centro">Centro</option>
+                            <option value="rio">Rio / Malecon</option>
+                            <option value="isla">Isla</option>
+                        </select>
+                        <select id="filtro-precio" class="filtro-select">
+                            <option value="">Precio</option>
+                            <option value="gratis">Gratis</option>
+                            <option value="$">$</option>
+                            <option value="$$">$$</option>
+                            <option value="$$$">$$$</option>
+                        </select>
+                        <select id="filtro-rating" class="filtro-select">
+                            <option value="0">Rating</option>
+                            <option value="3">3+★</option>
+                            <option value="4">4+★</option>
+                            <option value="4.5">4.5+★</option>
+                        </select>
+                    </div>
+                    <div class="filtros-info">
+                        <span id="resultados-count">0 lugares</span>
+                        <button id="limpiar-filtros" class="btn-limpiar">✕ Limpiar</button>
+                    </div>
+                </div>
+
+                <!-- Grid de tarjetas (scrollable) -->
+                <div class="lugares-grid" id="lugares-grid">
+                    <!-- Se generan dinamicamente desde app.js -->
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Mapa sticky -->
+            <div class="explorar-mapa" id="explorar-mapa">
+                <div id="map-container"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ MODAL DE DETALLE ============ -->
+    <div id="modal-detalle" class="modal">
+        <div class="modal-contenido">
+            <button class="modal-cerrar" id="modal-cerrar">&times;</button>
+
+            <!-- Galeria Swiper -->
+            <div id="modal-galeria" class="modal-galeria"></div>
+
+            <!-- Info del lugar -->
+            <div class="modal-info">
+                <div class="modal-header">
+                    <h2 id="modal-nombre"></h2>
+                    <span id="modal-categoria-badge" class="badge"></span>
+                </div>
+                <div id="modal-rating" class="estrellas"></div>
+                <p id="modal-descripcion"></p>
+
+                <div class="modal-detalles">
+                    <div id="modal-direccion" class="detalle-item"></div>
+                    <div id="modal-telefono" class="detalle-item"></div>
+                    <div id="modal-horario" class="detalle-item"></div>
+                    <div id="modal-precio" class="detalle-item"></div>
+                </div>
+
+                <div id="modal-servicios" class="modal-servicios"></div>
+
+                <div class="modal-enlaces">
+                    <a id="modal-web" href="#" target="_blank" class="btn-enlace" style="display:none;">🌐 Sitio Web</a>
+                    <a id="modal-facebook" href="#" target="_blank" class="btn-enlace" style="display:none;">📘 Facebook</a>
+                    <a id="modal-instagram" href="#" target="_blank" class="btn-enlace" style="display:none;">📷 Instagram</a>
+                    <a id="modal-maps" href="#" target="_blank" class="btn-enlace">📍 Como Llegar</a>
+                </div>
+
+                <!-- Mini mapa -->
+                <div id="modal-mini-mapa"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ BOTON VOLVER ARRIBA ============ -->
+    <button id="btn-arriba" class="btn-arriba" aria-label="Volver arriba">↑</button>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>🌊 Tuxpan Turistico</h3>
+                    <p>Tu guia turistica digital para descubrir todo lo que Tuxpan, Veracruz tiene para ofrecer.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Enlaces</h3>
+                    <ul>
+                        <li><a href="#hero">Inicio</a></li>
+                        <li><a href="#explorar">Explorar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contacto</h3>
+                    <p>Tuxpan de Rodriguez Cano, Veracruz, Mexico</p>
+                    <p>directorio@tuxpanturistico.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Directorio Turistico de Tuxpan. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ SCRIPTS ============ -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Scripts propios (el orden importa) -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>
