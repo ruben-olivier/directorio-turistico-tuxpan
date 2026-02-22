@@ -178,7 +178,7 @@ function initMapa() {
         maxZoom: 18
     }).addTo(mapa);
 
-    marcadoresLayer = L.layerGroup().addTo(mapa);
+    marcadoresLayer = L.featureGroup().addTo(mapa);
 
     // Cargar todos los marcadores
     actualizarMarcadoresMapa(LUGARES_DATA);
