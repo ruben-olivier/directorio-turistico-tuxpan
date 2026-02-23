@@ -194,6 +194,9 @@ function filtrarLugares() {
     if (typeof actualizarMarcadoresMapa === 'function') {
         actualizarMarcadoresMapa(resultados);
     }
+
+    // Actualizar badge de filtros activos
+    actualizarBadgeFiltros();
 }
 
 function limpiarFiltros() {
@@ -207,6 +210,48 @@ function limpiarFiltros() {
     document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('activo'));
 
     filtrarLugares();
+    actualizarBadgeFiltros();
+}
+
+// --- Toggle panel de filtros + badge ---
+
+function initFiltrosToggle() {
+    const btn = document.getElementById('btn-filtros-toggle');
+    const panel = document.getElementById('filtros-panel');
+    if (!btn || !panel) return;
+
+    btn.addEventListener('click', function () {
+        const abierto = panel.classList.toggle('abierto');
+        btn.classList.toggle('activo', abierto);
+    });
+}
+
+function actualizarBadgeFiltros() {
+    const cat = document.getElementById('filtro-categoria').value;
+    const zona = document.getElementById('filtro-zona').value;
+    const precio = document.getElementById('filtro-precio').value;
+    const rating = parseFloat(document.getElementById('filtro-rating').value) || 0;
+
+    let activos = 0;
+    if (cat) activos++;
+    if (zona) activos++;
+    if (precio) activos++;
+    if (rating > 0) activos++;
+
+    const badge = document.getElementById('filtros-badge');
+    const btnLimpiar = document.getElementById('limpiar-filtros');
+    const btnToggle = document.getElementById('btn-filtros-toggle');
+
+    if (badge) {
+        badge.textContent = activos;
+        badge.style.display = activos > 0 ? '' : 'none';
+    }
+    if (btnLimpiar) {
+        btnLimpiar.style.display = activos > 0 ? '' : 'none';
+    }
+    if (btnToggle) {
+        btnToggle.classList.toggle('activo', document.getElementById('filtros-panel').classList.contains('abierto'));
+    }
 }
 
 // --- Tabs Movil (Lista | Mapa) ---
@@ -312,6 +357,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnLimpiar) {
         btnLimpiar.addEventListener('click', limpiarFiltros);
     }
+
+    // Toggle filtros
+    initFiltrosToggle();
 
     // Tabs movil
     initTabs();
